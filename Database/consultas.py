@@ -5,7 +5,7 @@ conn = obtener_conexion()
 print("Conexión exitosa")
 
 with conn.cursor() as cursor:
-    cursor.execute("SELECT * FROM Ventas")
+    cursor.execute("SELECT * FROM Clientes")
     for fila in cursor:
         print(fila)
 
