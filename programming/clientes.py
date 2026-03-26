@@ -1,4 +1,4 @@
-#Ejemplo
+#Prueba
 import oracledb
 from conexion import obtener_conexion
 
