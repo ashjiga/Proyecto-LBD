@@ -10,7 +10,7 @@ with conn.cursor() as cursor:
 
     cursor.callproc("GET_CLIENTES", [out])
 
-    print("--- Lista de Clientes ---")
+    print("Lista de Clientes")
     
     for fila in out:
         print(fila)
