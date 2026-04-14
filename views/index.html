@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sistema Base de Datos</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -15,47 +15,47 @@
 
     <div class="contenedor">
 
-        <a href="categorias.html" class="card">
+        <a href="/categorias" class="card">
             <h3>Categorías</h3>
             <p>Administrar categorías</p>
         </a>
 
-        <a href="productos.html" class="card">
+        <a href="/productos" class="card">
             <h3>Productos</h3>
             <p>Administrar productos</p>
         </a>
 
-        <a href="inventario.html" class="card">
+        <a href="/inventario" class="card">
             <h3>Inventario</h3>
             <p>Ver y actualizar stock</p>
         </a>
 
-        <a href="clientes.html" class="card">
+        <a href="/clientes" class="card">
             <h3>Clientes</h3>
             <p>Administrar clientes</p>
         </a>
 
-        <a href="ventas.html" class="card">
+        <a href="/ventas" class="card">
             <h3>Ventas</h3>
             <p>Registrar ventas</p>
         </a>
 
-        <a href="detalle_ventas.html" class="card">
+        <a href="/detalle_ventas" class="card">
             <h3>Detalle Ventas</h3>
             <p>Productos vendidos</p>
         </a>
 
-        <a href="facturas.html" class="card">
+        <a href="/facturas" class="card">
             <h3>Facturas</h3>
             <p>Administrar facturas</p>
         </a>
 
-        <a href="detalle_facturas.html" class="card">
+        <a href="/detalle_facturas" class="card">
             <h3>Detalle Facturas</h3>
             <p>Facturas creadas</p>
         </a>
 
-        <a href="historial_ventas.html" class="card">
+        <a href="/historial_ventas" class="card">
             <h3>Historial</h3>
             <p>Ver ventas realizadas</p>
         </a>
