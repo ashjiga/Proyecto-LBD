@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+
+    <!-- CSS CORRECTO -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Clientes</h1>
+        <a href="/">Volver</a>
+    </header>
+
+    <div class="contenedor">
+
+        <h2>Registrar Cliente</h2>
+
+        <form action="/insertar" method="POST">
+            <input type="number" name="id" placeholder="ID" required>
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="text" name="apellido" placeholder="Apellido" required>
+            <input type="text" name="telefono" placeholder="Teléfono">
+            <input type="email" name="email" placeholder="Email">
+            <button type="submit">Guardar</button>
+        </form>
+
+        <h2>Lista</h2>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+
+            {% for c in clientes %}
+            <tr>
+                <form action="/actualizar" method="POST">
+                    <td>
+                        <input type="hidden" name="id" value="{{ c[0] }}">
+                        {{ c[0] }}
+                    </td>
+                    <td><input type="text" name="nombre" value="{{ c[1] }}"></td>
+                    <td><input type="text" name="apellido" value="{{ c[2] }}"></td>
+                    <td><input type="text" name="telefono" value="{{ c[3] }}"></td>
+                    <td><input type="text" name="email" value="{{ c[4] }}"></td>
+
+                    <td>
+                        <button type="submit">Actualizar</button>
+                        <a href="/eliminar/{{ c[0] }}">Eliminar</a>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</body>
+
+</html>
