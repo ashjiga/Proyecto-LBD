@@ -1,3 +1,4 @@
+--Cursores--
 --Listar productos
 DECLARE
   v_nombre  Productos.nombre%TYPE;
@@ -84,21 +85,30 @@ END;
 
 --Listar ventas
 DECLARE
-  CURSOR c_ventas IS
-    SELECT * FROM Ventas;
+    CURSOR c_ventas IS
+        SELECT 
+            ID_VENTA,
+            ID_CLIENTE,
+            FECHA,
+            TOTAL
+        FROM VENTAS;
 
-  v_fila c_ventas%ROWTYPE;
+    v_id_venta VENTAS.ID_VENTA%TYPE;
+    v_id_cliente VENTAS.ID_CLIENTE%TYPE;
+    v_fecha VENTAS.FECHA%TYPE;
+    v_total VENTAS.TOTAL%TYPE;
+
 BEGIN
-  OPEN c_ventas;
+    OPEN c_ventas;
 
-  LOOP
-    FETCH c_ventas INTO v_fila;
-    EXIT WHEN c_ventas%NOTFOUND;
+    LOOP
+        FETCH c_ventas INTO v_id_venta, v_id_cliente, v_fecha, v_total;
+        EXIT WHEN c_ventas%NOTFOUND;
 
-    DBMS_OUTPUT.PUT_LINE('Venta: ' || v_fila.id_venta || ' Total: ' || v_fila.total);
-  END LOOP;
+        DBMS_OUTPUT.PUT_LINE('Venta: ' || v_id_venta || ' Total: ' || v_total);
+    END LOOP;
 
-  CLOSE c_ventas;
+    CLOSE c_ventas;
 END;
 /
 

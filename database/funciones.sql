@@ -1,3 +1,4 @@
+--Funciones--
 --Total de una venta
 CREATE OR REPLACE FUNCTION fn_total_venta(p_id_venta NUMBER)
 RETURN NUMBER IS

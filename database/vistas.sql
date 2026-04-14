@@ -1,3 +1,4 @@
+--Vistas--
 --Vista de productos con categoría
 CREATE OR REPLACE VIEW vw_productos_categoria AS
 SELECT 
