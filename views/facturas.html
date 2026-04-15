@@ -4,19 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Facturas</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
     <header>
         <h1>Facturas</h1>
-        <a href="index.html">Volver</a>
+        <a href="/">Volver</a>
     </header>
 
     <div class="contenedor">
 
         <h2>Facturas</h2>
+
         <table>
             <tr>
                 <th>Número</th>
@@ -24,7 +25,31 @@
                 <th>Fecha</th>
                 <th>Total</th>
                 <th>Estado</th>
+                <th>Acciones</th>
             </tr>
+
+            {% for f in facturas %}
+            <tr>
+                <form action="/facturas/actualizar" method="POST">
+                    <input type="hidden" name="id" value="{{ f[0] }}">
+                    <td>{{ f[1] }}</td>
+                    <td>{{ f[2] }}</td>
+                    <td>{{ f[3].strftime('%d/%m/%Y') }}</td>
+                    <td>₡{{ f[4] }}</td>
+                    <td>
+                        <select name="estado">
+                            <option {% if f[5]=='Pagada' %}selected{% endif %}>Pagada</option>
+                            <option {% if f[5]=='Pendiente' %}selected{% endif %}>Pendiente</option>
+                            <option {% if f[5]=='Anulada' %}selected{% endif %}>Anulada</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit">Actualizar</button>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+
         </table>
 
     </div>

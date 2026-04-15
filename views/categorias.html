@@ -4,30 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Categorías</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
     <header>
         <h1>Categorías</h1>
-        <a href="index.html">Volver</a>
+        <a href="/">Volver</a>
     </header>
 
     <div class="contenedor">
 
         <h2>Nueva Categoría</h2>
-        <form>
-            <input type="text" placeholder="Nombre categoría">
-            <button>Guardar</button>
+
+        <form action="/categorias/insertar" method="POST">
+            <input type="number" name="id" placeholder="ID" required>
+            <input type="text" name="nombre" placeholder="Nombre categoría" required>
+            <button type="submit">Guardar</button>
         </form>
 
         <h2>Lista</h2>
+
         <table>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Acciones</th>
             </tr>
+
+            {% for c in categorias %}
+            <tr>
+                <form action="/categorias/actualizar" method="POST">
+                    <td>
+                        <input type="hidden" name="id" value="{{ c[0] }}">
+                        {{ c[0] }}
+                    </td>
+                    <td><input type="text" name="nombre" value="{{ c[1] }}"></td>
+                    <td>
+                        <button type="submit">Actualizar</button>
+                        <a href="/categorias/eliminar/{{ c[0] }}">Eliminar</a>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+
         </table>
 
     </div>

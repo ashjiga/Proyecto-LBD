@@ -4,19 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalle Ventas</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
     <header>
         <h1>Detalle Ventas</h1>
-        <a href="index.html">Volver</a>
+        <a href="/">Volver</a>
     </header>
 
     <div class="contenedor">
 
         <h2>Detalle de Venta</h2>
+
         <table>
             <tr>
                 <th>Venta</th>
@@ -25,6 +26,17 @@
                 <th>Cantidad</th>
                 <th>Precio</th>
             </tr>
+
+            {% for d in detalles %}
+            <tr>
+                <td>{{ d[0] }}</td>
+                <td>{{ d[1] }}</td>
+                <td>{{ d[2] }}</td>
+                <td>{{ d[3] }}</td>
+                <td>₡{{ d[4] }}</td>
+            </tr>
+            {% endfor %}
+
         </table>
 
     </div>

@@ -4,27 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalle Facturas</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
     <header>
         <h1>Detalle Facturas</h1>
-        <a href="index.html">Volver</a>
+        <a href="/">Volver</a>
     </header>
 
     <div class="contenedor">
 
         <h2>Detalle Factura</h2>
+
         <table>
             <tr>
                 <th>Factura</th>
+                <th>Estado</th>
                 <th>Producto</th>
                 <th>Talla</th>
                 <th>Cantidad</th>
                 <th>Subtotal</th>
             </tr>
+
+            {% set factura_anterior = None %}
+
+            {% for d in detalles %}
+            <tr>
+                {% if factura_anterior != d[0] %}
+                    <td>{{ d[0] }}</td>
+                    <td>{{ d[1] }}</td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                {% endif %}
+
+                <td>{{ d[2] }}</td>
+                <td>{{ d[3] }}</td>
+                <td>{{ d[4] }}</td>
+                <td>₡{{ d[5] }}</td>
+            </tr>
+
+            {% set factura_anterior = d[0] %}
+            {% endfor %}
+
         </table>
 
     </div>
