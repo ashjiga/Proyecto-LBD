@@ -1,3 +1,4 @@
+# Gestión de ventas usando procedimientos, funciones y paquetes para consultar datos y crear ventas con su detalle y factura
 from flask import Blueprint, render_template, request, redirect
 from conexion import obtener_conexion
 import oracledb

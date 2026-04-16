@@ -1,3 +1,4 @@
+# CRUD de categorías llamando procedimientos y funciones (listar, insertar, actualizar y eliminar)
 from flask import Blueprint, render_template, request, redirect
 import oracledb
 from conexion import obtener_conexion

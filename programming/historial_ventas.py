@@ -1,3 +1,4 @@
+# Consulta y muestra el historial de ventas usando un procedimiento almacenado
 from flask import Blueprint, render_template
 import oracledb
 from conexion import obtener_conexion

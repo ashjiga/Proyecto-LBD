@@ -1,3 +1,4 @@
+# Consulta y actualización del inventario llamando procedimientos almacenados
 from flask import Blueprint, render_template, request, redirect
 import oracledb
 from conexion import obtener_conexion

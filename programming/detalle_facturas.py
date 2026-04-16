@@ -1,3 +1,4 @@
+# Consulta y muestra el detalle de facturas usando un procedimiento almacenado
 from flask import Blueprint, render_template
 from conexion import obtener_conexion
 import oracledb

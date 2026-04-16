@@ -2,11 +2,11 @@ import oracledb
 import sys
 
 # Conexión Oracle
-instant_client_dir = r""
-wallet_dir = r""
+instant_client_dir = r"C:\Users\ashji\Downloads\instantclient-basiclite-windows.x64-23.26.1.0.0\instantclient_23_0"
+wallet_dir = r"C:\Users\ashji\Downloads\Wallet_DatabaseLBD"
 dsn = "databaselbd_high"
 user = "ADMIN"
-password = ""
+password = "TiendaRopaLBDG7-"
 
 def obtener_conexion():
     try:
