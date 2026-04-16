@@ -3,12 +3,14 @@ from conexion import obtener_conexion
 
 detalle_ventas_bp = Blueprint("detalle_ventas", __name__)
 
+# Mostrar detalle de ventas
 @detalle_ventas_bp.route("/detalle_ventas")
 def detalle_ventas():
 
     conn = obtener_conexion()
     cursor = conn.cursor()
 
+    # Consulta de ventas con cliente y total
     cursor.execute("""
         SELECT 
             v.id_venta,

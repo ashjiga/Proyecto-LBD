@@ -4,7 +4,7 @@ from conexion import obtener_conexion
 
 clientes_bp = Blueprint("clientes", __name__)
 
-
+# Mostrar clientes
 @clientes_bp.route("/clientes")
 def clientes():
     conn = obtener_conexion()
@@ -18,7 +18,7 @@ def clientes():
     conn.close()
     return render_template("clientes.html", clientes=lista)
 
-
+# Insertar cliente
 @clientes_bp.route("/insertar", methods=["POST"])
 def insertar():
     data = request.form
@@ -41,7 +41,7 @@ def insertar():
     conn.close()
     return redirect("/clientes")
 
-
+# Actualizar cliente
 @clientes_bp.route("/actualizar", methods=["POST"])
 def actualizar():
     data = request.form
@@ -61,7 +61,7 @@ def actualizar():
     conn.close()
     return redirect("/clientes")
 
-
+# Eliminar cliente
 @clientes_bp.route("/eliminar", methods=["POST"])
 def eliminar():
     id_cliente = int(request.form.get("id"))

@@ -4,11 +4,13 @@ from conexion import obtener_conexion
 
 productos_bp = Blueprint("productos", __name__)
 
+# Mostrar productos y categorías
 @productos_bp.route("/productos")
 def productos():
     conn = obtener_conexion()
     cursor = conn.cursor()
 
+    # Lista de productos
     cursor.execute("""
         SELECT
             p.id_producto,
@@ -31,7 +33,7 @@ def productos():
 
     return render_template("productos.html", productos=lista, categorias=categorias)
 
-
+# Agregar producto
 @productos_bp.route("/productos/agregar", methods=["POST"])
 def agregar_producto():
     data = request.form
@@ -55,7 +57,7 @@ def agregar_producto():
     conn.close()
     return redirect("/productos")
 
-
+# Actualizar producto
 @productos_bp.route("/productos/actualizar", methods=["POST"])
 def actualizar_producto():
     data = request.form
@@ -76,7 +78,7 @@ def actualizar_producto():
     conn.close()
     return redirect("/productos")
 
-
+# Eliminar producto
 @productos_bp.route("/productos/eliminar", methods=["POST"])
 def eliminar_producto():
     data = request.form

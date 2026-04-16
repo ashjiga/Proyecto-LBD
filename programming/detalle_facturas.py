@@ -3,11 +3,13 @@ from conexion import obtener_conexion
 
 detalle_facturas_bp = Blueprint("detalle_facturas", __name__)
 
+# Mostrar detalle de facturas
 @detalle_facturas_bp.route("/detalle_facturas")
 def detalle_facturas():
     conn = obtener_conexion()
     cursor = conn.cursor()
 
+    # Consulta con joins para obtener información completa de la factura
     cursor.execute("""
         SELECT 
             f.numero_factura,

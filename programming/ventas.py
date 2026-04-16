@@ -2,19 +2,22 @@ from flask import Blueprint, render_template, request, redirect
 from conexion import obtener_conexion
 
 ventas_bp = Blueprint("ventas", __name__)
+
+# Vista de ventas (clientes e inventario)
 @ventas_bp.route("/ventas")
 def vista_ventas():
 
     conn = obtener_conexion()
     cursor = conn.cursor()
 
+    # Clientes disponibles
     cursor.execute("""
         SELECT id_cliente, nombre, apellido
         FROM Clientes
     """)
     clientes = cursor.fetchall()
 
-
+    # Inventario disponible para venta
     cursor.execute("""
         SELECT 
             i.id_inventario,
@@ -33,6 +36,7 @@ def vista_ventas():
                            clientes=clientes,
                            inventario=inventario)
 
+# Crear una venta completa
 @ventas_bp.route("/ventas/crear", methods=["POST"])
 def crear_venta():
 

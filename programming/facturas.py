@@ -3,12 +3,14 @@ from conexion import obtener_conexion
 
 facturas_bp = Blueprint("facturas", __name__)
 
+# Mostrar facturas
 @facturas_bp.route("/facturas")
 def facturas():
 
     conn = obtener_conexion()
     cursor = conn.cursor()
 
+    # Consulta de facturas con datos del cliente
     cursor.execute("""
         SELECT 
             f.id_factura,
@@ -30,6 +32,7 @@ def facturas():
     return render_template("facturas.html", facturas=lista)
 
 
+# Actualizar estado de la factura
 @facturas_bp.route("/facturas/actualizar", methods=["POST"])
 def actualizar_factura():
 
@@ -49,6 +52,7 @@ def actualizar_factura():
 
     return redirect("/facturas")
 
+# Ir al detalle de facturas
 @facturas_bp.route("/facturas/ver_detalle")
 def ver_detalle_facturas():
     return redirect("/detalle_facturas")

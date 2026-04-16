@@ -4,7 +4,7 @@ from conexion import obtener_conexion
 
 categorias_bp = Blueprint("categorias", __name__)
 
-
+# Mostrar todas las categorías
 @categorias_bp.route("/categorias")
 def categorias():
     conn = obtener_conexion()
@@ -18,7 +18,7 @@ def categorias():
     conn.close()
     return render_template("categorias.html", categorias=lista)
 
-
+# Insertar nueva categoría
 @categorias_bp.route("/categorias/insertar", methods=["POST"])
 def insertar_categoria():
     data = request.form
@@ -34,7 +34,7 @@ def insertar_categoria():
     conn.close()
     return redirect("/categorias")
 
-
+# Actualizar categoría
 @categorias_bp.route("/categorias/actualizar", methods=["POST"])
 def actualizar_categoria():
     data = request.form
@@ -51,7 +51,7 @@ def actualizar_categoria():
     conn.close()
     return redirect("/categorias")
 
-
+# Eliminar categoría
 @categorias_bp.route("/categorias/eliminar", methods=["POST"])
 def eliminar_categoria():
     id_cat = int(request.form.get("id"))

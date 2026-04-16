@@ -3,12 +3,14 @@ from conexion import obtener_conexion
 
 historial_ventas_bp = Blueprint("historial_ventas", __name__)
 
+# Mostrar historial de ventas
 @historial_ventas_bp.route("/historial_ventas")
 def historial():
 
     conn = obtener_conexion()
     cursor = conn.cursor()
 
+    # Consulta con agregaciones (total, cantidad y productos vendidos)
     cursor.execute("""
     SELECT
         nombre_cliente(v.id_cliente),

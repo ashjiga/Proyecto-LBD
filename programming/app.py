@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+
+# Importar módulos del sistema
 from clientes import clientes_bp
 from categorias import categorias_bp
 from detalle_facturas import detalle_facturas_bp
@@ -9,6 +11,7 @@ from inventario import inventario_bp
 from productos import productos_bp
 from ventas import ventas_bp
 
+# Crear la app
 app = Flask(__name__,
             template_folder="../views",
             static_folder="../css",

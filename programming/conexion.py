@@ -1,6 +1,7 @@
 import oracledb
 import sys
 
+# Conexión Oracle
 instant_client_dir = r""
 wallet_dir = r""
 dsn = "databaselbd_high"

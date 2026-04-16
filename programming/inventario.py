@@ -4,11 +4,13 @@ from conexion import obtener_conexion
 
 inventario_bp = Blueprint("inventario", __name__)
 
+# Mostrar inventario
 @inventario_bp.route("/inventario")
 def inventario():
     conn = obtener_conexion()
     cursor = conn.cursor()
 
+    # Consulta de productos con su stock
     cursor.execute("""
         SELECT
             i.id_inventario,
@@ -26,7 +28,7 @@ def inventario():
 
     return render_template("inventario.html", inventario=lista)
 
-
+# Actualizar stock del inventario
 @inventario_bp.route("/inventario/actualizar", methods=["POST"])
 def actualizar_stock():
     data = request.form
