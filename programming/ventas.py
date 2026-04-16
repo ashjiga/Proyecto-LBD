@@ -137,4 +137,5 @@ def crear_venta():
         cursor.close()
         conn.close()
 
+    # Redirección con estado de éxito
     return redirect("/detalle_ventas?ok=1")
