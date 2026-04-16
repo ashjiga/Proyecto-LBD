@@ -1,36 +1,27 @@
-# inventario.py
 from flask import Blueprint, render_template, request, redirect
+import oracledb
 from conexion import obtener_conexion
 
 inventario_bp = Blueprint("inventario", __name__)
 
-# Mostrar inventario
 @inventario_bp.route("/inventario")
 def inventario():
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    # Consulta de productos con su stock
-    cursor.execute("""
-        SELECT
-            i.id_inventario,
-            p.nombre,
-            i.talla,
-            i.stock_actual
-        FROM Inventario i
-        JOIN Productos p ON i.id_producto = p.id_producto
-        ORDER BY p.nombre, i.talla
-        """)
+    out = cursor.var(oracledb.CURSOR)
+    cursor.callproc("SP_LISTAR_INVENTARIO", [out])
 
-    lista = cursor.fetchall()
+    lista = list(out.getvalue())
+
     cursor.close()
     conn.close()
 
     return render_template("inventario.html", inventario=lista)
 
-# Actualizar stock del inventario
+
 @inventario_bp.route("/inventario/actualizar", methods=["POST"])
-def actualizar_stock():
+def actualizar_inventario():
     data = request.form
 
     conn = obtener_conexion()
@@ -44,4 +35,5 @@ def actualizar_stock():
     conn.commit()
     cursor.close()
     conn.close()
+
     return redirect("/inventario")

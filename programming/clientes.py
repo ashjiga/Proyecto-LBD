@@ -4,7 +4,6 @@ from conexion import obtener_conexion
 
 clientes_bp = Blueprint("clientes", __name__)
 
-# Mostrar clientes
 @clientes_bp.route("/clientes")
 def clientes():
     conn = obtener_conexion()
@@ -18,7 +17,6 @@ def clientes():
     conn.close()
     return render_template("clientes.html", clientes=lista)
 
-# Insertar cliente
 @clientes_bp.route("/insertar", methods=["POST"])
 def insertar():
     data = request.form
@@ -26,8 +24,7 @@ def insertar():
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT NVL(MAX(id_cliente), 0) + 1 FROM Clientes")
-    nuevo_id = cursor.fetchone()[0]
+    nuevo_id = cursor.callfunc("FN_NUEVO_ID_CLIENTE", int)
 
     cursor.callproc("INSERTAR_CLIENTE", [
         nuevo_id,
@@ -41,7 +38,6 @@ def insertar():
     conn.close()
     return redirect("/clientes")
 
-# Actualizar cliente
 @clientes_bp.route("/actualizar", methods=["POST"])
 def actualizar():
     data = request.form
@@ -61,7 +57,6 @@ def actualizar():
     conn.close()
     return redirect("/clientes")
 
-# Eliminar cliente
 @clientes_bp.route("/eliminar", methods=["POST"])
 def eliminar():
     id_cliente = int(request.form.get("id"))

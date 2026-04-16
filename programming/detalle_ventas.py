@@ -1,27 +1,20 @@
 from flask import Blueprint, render_template
 from conexion import obtener_conexion
+import oracledb
 
 detalle_ventas_bp = Blueprint("detalle_ventas", __name__)
 
-# Mostrar detalle de ventas
 @detalle_ventas_bp.route("/detalle_ventas")
 def detalle_ventas():
 
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    # Consulta de ventas con cliente y total
-    cursor.execute("""
-        SELECT 
-            v.id_venta,
-            nombre_cliente(v.id_cliente),
-            v.fecha,
-            v.total
-        FROM Ventas v
-        ORDER BY v.id_venta DESC
-        """)
+    out_cursor = cursor.var(oracledb.CURSOR)
 
-    ventas = cursor.fetchall()
+    cursor.callproc("SP_LISTAR_VENTAS", [out_cursor])
+
+    ventas = out_cursor.getvalue().fetchall()
 
     cursor.close()
     conn.close()

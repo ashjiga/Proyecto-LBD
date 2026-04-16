@@ -24,16 +24,19 @@
             <select name="id_cliente" required>
                 <option value="" disabled selected>Seleccione un cliente</option>
                 {% for c in clientes %}
-                <option value="{{ c[0] }}">{{ c[1] }} {{ c[2] }}</option>
+                <option value="{{ c[0] }}">
+                    {{ c[1] }} {{ c[2] }}
+                </option>
                 {% endfor %}
             </select>
 
             <label>Producto</label>
             <select name="id_inventario" required>
                 <option value="" disabled selected>Seleccione un producto</option>
+
                 {% for i in inventario %}
                 <option value="{{ i[0] }}">
-                    {{ i[1] }} - ₡{{ i[2] }} | Stock: {{ i[3] }}
+                    {{ i[1] }} (Talla: {{ i[2] }}) - ₡{{ i[4] }} | Stock: {{ i[3] }}
                 </option>
                 {% endfor %}
             </select>

@@ -1,39 +1,30 @@
-# productos.py
 from flask import Blueprint, render_template, request, redirect
+import oracledb
 from conexion import obtener_conexion
 
 productos_bp = Blueprint("productos", __name__)
 
-# Mostrar productos y categorías
 @productos_bp.route("/productos")
 def productos():
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    # Lista de productos
-    cursor.execute("""
-        SELECT
-            p.id_producto,
-            p.nombre,
-            p.descripcion,
-            c.nombre_categoria,
-            p.precio_venta,
-            p.id_categoria
-        FROM Productos p
-        JOIN Categorias c ON p.id_categoria = c.id_categoria
-        ORDER BY p.id_producto
-        """)
-    lista = cursor.fetchall()
+    out_prod = cursor.var(oracledb.CURSOR)
+    cursor.callproc("SP_LISTAR_PRODUCTOS_FULL", [out_prod])
+    lista = list(out_prod.getvalue())
 
-    cursor.execute("SELECT id_categoria, nombre_categoria FROM Categorias ORDER BY nombre_categoria")
-    categorias = cursor.fetchall()
+    out_cat = cursor.var(oracledb.CURSOR)
+    cursor.callproc("SP_LISTAR_CATEGORIAS", [out_cat])
+    categorias = list(out_cat.getvalue())
 
     cursor.close()
     conn.close()
 
-    return render_template("productos.html", productos=lista, categorias=categorias)
+    return render_template("productos.html",
+                           productos=lista,
+                           categorias=categorias)
 
-# Agregar producto
+
 @productos_bp.route("/productos/agregar", methods=["POST"])
 def agregar_producto():
     data = request.form
@@ -41,8 +32,7 @@ def agregar_producto():
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT NVL(MAX(id_producto), 0) + 1 FROM Productos")
-    nuevo_id = cursor.fetchone()[0]
+    nuevo_id = cursor.callfunc("FN_NUEVO_ID_PRODUCTO", int)
 
     cursor.callproc("SP_NUEVO_PRODUCTO", [
         nuevo_id,
@@ -55,9 +45,10 @@ def agregar_producto():
     conn.commit()
     cursor.close()
     conn.close()
+
     return redirect("/productos")
 
-# Actualizar producto
+
 @productos_bp.route("/productos/actualizar", methods=["POST"])
 def actualizar_producto():
     data = request.form
@@ -76,9 +67,10 @@ def actualizar_producto():
     conn.commit()
     cursor.close()
     conn.close()
+
     return redirect("/productos")
 
-# Eliminar producto
+
 @productos_bp.route("/productos/eliminar", methods=["POST"])
 def eliminar_producto():
     data = request.form
@@ -86,9 +78,12 @@ def eliminar_producto():
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    cursor.callproc("SP_BORRAR_PRODUCTO", [int(data.get("id"))])
+    cursor.callproc("SP_BORRAR_PRODUCTO", [
+        int(data.get("id"))
+    ])
 
     conn.commit()
     cursor.close()
     conn.close()
+
     return redirect("/productos")

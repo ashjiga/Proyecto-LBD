@@ -17,19 +17,20 @@
     <div class="contenedor">
 
         <table>
-            <tr>
-                <th>Número</th>
-                <th>Cliente</th>
-                <th>Fecha</th>
-                <th>Total</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-            {% for f in facturas %}
-            <tr>
-                <form action="/facturas/actualizar" method="POST">
-                    <input type="hidden" name="id" value="{{ f[0] }}">
+            <tbody>
+                {% for f in facturas %}
+                <tr>
 
                     <td>{{ f[1] }}</td>
                     <td>{{ f[2] }}</td>
@@ -37,24 +38,28 @@
                     <td>₡{{ f[4] }}</td>
 
                     <td>
-                        <select name="estado">
-                            <option {% if f[5]=='Pagada' %}selected{% endif %}>Pagada</option>
-                            <option {% if f[5]=='Pendiente' %}selected{% endif %}>Pendiente</option>
-                            <option {% if f[5]=='Anulada' %}selected{% endif %}>Anulada</option>
-                        </select>
+                        <form action="{{ url_for('facturas.actualizar_factura', id=f[0]) }}" method="POST">
+                            <select name="estado">
+                                <option value="Pagada" {% if f[5]=='Pagada' %}selected{% endif %}>Pagada</option>
+                                <option value="Pendiente" {% if f[5]=='Pendiente' %}selected{% endif %}>Pendiente
+                                </option>
+                                <option value="Anulada" {% if f[5]=='Anulada' %}selected{% endif %}>Anulada</option>
+                            </select>
                     </td>
 
                     <td>
                         <button type="submit" class="btn">Actualizar</button>
+                        </form>
 
-                        <a href="/facturas/ver_detalle" class="btn">
+                        <!-- CORREGIDO -->
+                        <a href="{{ url_for('detalle_facturas.detalle_facturas', id=f[0]) }}" class="btn">
                             Ver detalle
                         </a>
                     </td>
 
-                </form>
-            </tr>
-            {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
 
         </table>
 

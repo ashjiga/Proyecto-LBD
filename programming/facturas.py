@@ -1,58 +1,62 @@
 from flask import Blueprint, render_template, request, redirect
+import oracledb
 from conexion import obtener_conexion
 
 facturas_bp = Blueprint("facturas", __name__)
 
-# Mostrar facturas
 @facturas_bp.route("/facturas")
 def facturas():
 
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    # Consulta de facturas con datos del cliente
-    cursor.execute("""
-        SELECT 
-            f.id_factura,
-            f.numero_factura,
-            nombre_cliente(v.id_cliente),
-            f.fecha_emision,
-            f.total_factura,
-            f.estado
-        FROM Facturas f
-        JOIN Ventas v ON f.id_venta = v.id_venta
-        ORDER BY f.id_factura DESC
-        """)
+    try:
+        out = cursor.var(oracledb.CURSOR)
 
-    lista = cursor.fetchall()
+        cursor.callproc("SP_LISTAR_FACTURAS", [out])
 
-    cursor.close()
-    conn.close()
+        result_cursor = out.getvalue()
+        lista = result_cursor.fetchall()
+
+    except Exception as e:
+        print("ERROR LISTANDO FACTURAS:", e)
+        lista = []
+
+    finally:
+        cursor.close()
+        conn.close()
 
     return render_template("facturas.html", facturas=lista)
 
 
-# Actualizar estado de la factura
-@facturas_bp.route("/facturas/actualizar", methods=["POST"])
-def actualizar_factura():
+@facturas_bp.route("/facturas/actualizar/<int:id>", methods=["POST"])
+def actualizar_factura(id):
 
-    data = request.form
+    estado = request.form.get("estado")
+    impuesto = request.form.get("impuesto")
+
+    try:
+        impuesto = float(impuesto)
+    except:
+        impuesto = 0
 
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    cursor.callproc("SP_MODIFICAR_FACTURA", [
-        int(data.get("id")),
-        data.get("estado")
-    ])
+    try:
+        cursor.callproc("SP_ACTUALIZAR_FACTURA", [
+            id,
+            estado,
+            impuesto
+        ])
 
-    conn.commit()
-    cursor.close()
-    conn.close()
+        conn.commit()
+
+    except Exception as e:
+        print("ERROR ACTUALIZANDO FACTURA:", e)
+
+    finally:
+        cursor.close()
+        conn.close()
 
     return redirect("/facturas")
-
-# Ir al detalle de facturas
-@facturas_bp.route("/facturas/ver_detalle")
-def ver_detalle_facturas():
-    return redirect("/detalle_facturas")
