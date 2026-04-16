@@ -11,7 +11,7 @@
 
     <header>
         <h1>Detalle Facturas</h1>
-        <a href="/">Volver</a>
+        <a href="/" class="btn">Volver</a>
     </header>
 
     <div class="contenedor">
@@ -33,11 +33,11 @@
             {% for d in detalles %}
             <tr>
                 {% if factura_anterior != d[0] %}
-                    <td>{{ d[0] }}</td>
-                    <td>{{ d[1] }}</td>
+                <td>{{ d[0] }}</td>
+                <td>{{ d[1] }}</td>
                 {% else %}
-                    <td></td>
-                    <td></td>
+                <td></td>
+                <td></td>
                 {% endif %}
 
                 <td>{{ d[2] }}</td>

@@ -105,7 +105,7 @@ form {
     gap: 15px;
 }
 
-input {
+input, select {
     width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -114,18 +114,32 @@ input {
     color: #2c3e50;
 }
 
-button {
-    padding: 10px 15px;
+button,
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     background: #38a78f;
     color: #ffffff;
     cursor: pointer;
     font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
 }
 
-button:hover {
+button:hover,
+.btn:hover {
     background: #2e8c78;
+}
+
+.btn-danger {
+    background: #c0392b;
+}
+
+.btn-danger:hover {
+    background: #e74c3c;
 }
 
 table {
@@ -158,10 +172,11 @@ tr:hover {
     background: #e9fffb;
 }
 
-td button {
+td button,
+td .btn {
     margin: 3px;
-    padding: 5px 8px;
-    font-size: 12px;
+    padding: 6px 10px;
+    font-size: 13px;
 }
 
 p {

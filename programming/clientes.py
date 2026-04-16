@@ -13,14 +13,9 @@ def clientes():
     out = cursor.var(oracledb.CURSOR)
     cursor.callproc("GET_CLIENTES", [out])
 
-    result = out.getvalue()
-
-    lista = []
-    for fila in result:
-        lista.append(fila)
+    lista = list(out.getvalue())
 
     conn.close()
-
     return render_template("clientes.html", clientes=lista)
 
 
@@ -28,28 +23,21 @@ def clientes():
 def insertar():
     data = request.form
 
-    id_cliente = data.get("id")
-
-    if not id_cliente:
-        return "Error: debe ingresar ID"
-
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    try:
-        cursor.callproc("INSERTAR_CLIENTE", [
-            int(id_cliente),
-            data.get("nombre"),
-            data.get("apellido"),
-            data.get("telefono"),
-            data.get("email")
-        ])
-        conn.commit()
+    cursor.execute("SELECT NVL(MAX(id_cliente), 0) + 1 FROM Clientes")
+    nuevo_id = cursor.fetchone()[0]
 
-    except oracledb.IntegrityError:
-        conn.close()
-        return "Error: el ID ya existe, use otro"
+    cursor.callproc("INSERTAR_CLIENTE", [
+        nuevo_id,
+        data.get("nombre"),
+        data.get("apellido"),
+        data.get("telefono"),
+        data.get("email")
+    ])
 
+    conn.commit()
     conn.close()
     return redirect("/clientes")
 
@@ -71,18 +59,18 @@ def actualizar():
 
     conn.commit()
     conn.close()
-
     return redirect("/clientes")
 
 
-@clientes_bp.route("/eliminar/<int:id>")
-def eliminar(id):
+@clientes_bp.route("/eliminar", methods=["POST"])
+def eliminar():
+    id_cliente = int(request.form.get("id"))
+
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    cursor.callproc("BORRAR_CLIENTE", [id])
+    cursor.callproc("BORRAR_CLIENTE", [id_cliente])
 
     conn.commit()
     conn.close()
-
     return redirect("/clientes")

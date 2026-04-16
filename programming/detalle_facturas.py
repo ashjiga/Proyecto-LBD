@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template
-import oracledb
 from conexion import obtener_conexion
 
 detalle_facturas_bp = Blueprint("detalle_facturas", __name__)
@@ -21,10 +20,11 @@ def detalle_facturas():
         JOIN Facturas f      ON df.id_factura   = f.id_factura
         JOIN Inventario i    ON df.id_inventario = i.id_inventario
         JOIN Productos p     ON i.id_producto    = p.id_producto
-        ORDER BY f.numero_factura, df.id_detalle_fac
+        ORDER BY f.id_factura, df.id_detalle_fac
         """)
 
     lista = cursor.fetchall()
+
     cursor.close()
     conn.close()
 

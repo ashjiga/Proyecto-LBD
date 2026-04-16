@@ -4,25 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Ventas</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
     <header>
         <h1>Ventas</h1>
-        <a href="index.html">Volver</a>
+        <a href="/" class="btn">Volver</a>
     </header>
 
     <div class="contenedor">
 
-        <h2>Nueva Venta</h2>
-        <form>
-            <select>
-                <option>Seleccionar Cliente</option>
+        <h2>Nueva venta</h2>
+
+        <form action="/ventas/crear" method="POST">
+
+            <label>Cliente</label>
+            <select name="id_cliente" required>
+                <option value="" disabled selected>Seleccione un cliente</option>
+                {% for c in clientes %}
+                <option value="{{ c[0] }}">{{ c[1] }} {{ c[2] }}</option>
+                {% endfor %}
             </select>
 
-            <button>Crear Venta</button>
+            <label>Producto</label>
+            <select name="id_inventario" required>
+                <option value="" disabled selected>Seleccione un producto</option>
+                {% for i in inventario %}
+                <option value="{{ i[0] }}">
+                    {{ i[1] }} - ₡{{ i[2] }} | Stock: {{ i[3] }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <label>Cantidad</label>
+            <input type="number" name="cantidad" min="1" required>
+
+            <button type="submit" class="btn">Registrar venta</button>
+
         </form>
 
     </div>

@@ -4,26 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Historial</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
     <header>
         <h1>Historial de Ventas</h1>
-        <a href="index.html">Volver</a>
+        <a href="/" class="btn">Volver</a>
     </header>
 
     <div class="contenedor">
 
         <h2>Historial</h2>
+
         <table>
             <tr>
                 <th>Cliente</th>
                 <th>Fecha</th>
                 <th>Total</th>
                 <th>Factura</th>
+                <th>Cantidad Items</th>
+                <th>Productos</th>
             </tr>
+
+            {% for h in historial %}
+            <tr>
+                <td>{{ h[0] }}</td>
+                <td>{{ h[1].strftime('%d/%m/%Y') }}</td>
+                <td>₡{{ h[2] }}</td>
+                <td>{{ h[3] }}</td>
+                <td>{{ h[4] }}</td>
+                <td>{{ h[5] }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">No hay ventas registradas.</td>
+            </tr>
+            {% endfor %}
+
         </table>
 
     </div>

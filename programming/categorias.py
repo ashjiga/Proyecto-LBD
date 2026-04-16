@@ -13,10 +13,7 @@ def categorias():
     out = cursor.var(oracledb.CURSOR)
     cursor.callproc("LISTAR_CATEGORIAS", [out])
 
-    result = out.getvalue()
-    lista = []
-    for fila in result:
-        lista.append(fila)
+    lista = list(out.getvalue())
 
     conn.close()
     return render_template("categorias.html", categorias=lista)
@@ -26,23 +23,14 @@ def categorias():
 def insertar_categoria():
     data = request.form
 
-    id_cat = data.get("id")
-    if not id_cat:
-        return "Error: debe ingresar ID"
-
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    try:
-        cursor.callproc("ADD_CATEGORIA", [
-            int(id_cat),
-            data.get("nombre")
-        ])
-        conn.commit()
-    except oracledb.IntegrityError:
-        conn.close()
-        return "Error: el ID ya existe"
+    cursor.execute("SELECT NVL(MAX(id_categoria), 0) + 1 FROM Categorias")
+    nuevo_id = cursor.fetchone()[0]
 
+    cursor.callproc("ADD_CATEGORIA", [nuevo_id, data.get("nombre")])
+    conn.commit()
     conn.close()
     return redirect("/categorias")
 
@@ -64,12 +52,14 @@ def actualizar_categoria():
     return redirect("/categorias")
 
 
-@categorias_bp.route("/categorias/eliminar/<int:id>")
-def eliminar_categoria(id):
+@categorias_bp.route("/categorias/eliminar", methods=["POST"])
+def eliminar_categoria():
+    id_cat = int(request.form.get("id"))
+
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    cursor.callproc("ELIMINAR_CAT", [id])
+    cursor.callproc("ELIMINAR_CAT", [id_cat])
 
     conn.commit()
     conn.close()

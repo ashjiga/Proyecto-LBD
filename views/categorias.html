@@ -11,44 +11,59 @@
 
     <header>
         <h1>Categorías</h1>
-        <a href="/">Volver</a>
+        <a href="/" class="btn">Volver</a>
     </header>
 
     <div class="contenedor">
 
         <h2>Nueva Categoría</h2>
-
         <form action="/categorias/insertar" method="POST">
-            <input type="number" name="id" placeholder="ID" required>
             <input type="text" name="nombre" placeholder="Nombre categoría" required>
-            <button type="submit">Guardar</button>
+            <button type="submit" class="btn">Guardar</button>
         </form>
 
         <h2>Lista</h2>
-
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Acciones</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in categorias %}
+                <tr>
+                    <td>{{ c[0] }}</td>
+                    <td>
+                        <input type="text" name="nombre" value="{{ c[1] }}" form="form-upd-cat-{{ c[0] }}" required>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn" form="form-upd-cat-{{ c[0] }}">
+                            Actualizar
+                        </button>
 
-            {% for c in categorias %}
-            <tr>
-                <form action="/categorias/actualizar" method="POST">
-                    <td>
-                        <input type="hidden" name="id" value="{{ c[0] }}">
-                        {{ c[0] }}
+                        <button type="submit" class="btn btn-danger" form="form-del-cat-{{ c[0] }}"
+                            onclick="return confirm('¿Eliminar categoría?')">
+                            Eliminar
+                        </button>
                     </td>
-                    <td><input type="text" name="nombre" value="{{ c[1] }}"></td>
-                    <td>
-                        <button type="submit">Actualizar</button>
-                        <a href="/categorias/eliminar/{{ c[0] }}">Eliminar</a>
-                    </td>
+                </tr>
+
+                <form id="form-upd-cat-{{ c[0] }}" action="/categorias/actualizar" method="POST">
+                    <input type="hidden" name="id" value="{{ c[0] }}">
                 </form>
-            </tr>
-            {% endfor %}
 
+                <form id="form-del-cat-{{ c[0] }}" action="/categorias/eliminar" method="POST">
+                    <input type="hidden" name="id" value="{{ c[0] }}">
+                </form>
+
+                {% else %}
+                <tr>
+                    <td colspan="3">No hay categorías registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
 
     </div>

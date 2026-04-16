@@ -3,40 +3,41 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Detalle Ventas</title>
+    <title>Detalle ventas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
     <header>
-        <h1>Detalle Ventas</h1>
-        <a href="/">Volver</a>
+        <h1>Detalle de ventas</h1>
+        <a href="/" class="btn">Volver</a>
     </header>
 
     <div class="contenedor">
 
-        <h2>Detalle de Venta</h2>
+        {% if request.args.get('ok') %}
+        <script>
+            alert("!Venta generada correctamente!");
+        </script>
+        {% endif %}
 
         <table>
             <tr>
-                <th>Venta</th>
-                <th>Producto</th>
-                <th>Talla</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Total</th>
             </tr>
 
-            {% for d in detalles %}
+            {% for v in ventas %}
             <tr>
-                <td>{{ d[0] }}</td>
-                <td>{{ d[1] }}</td>
-                <td>{{ d[2] }}</td>
-                <td>{{ d[3] }}</td>
-                <td>₡{{ d[4] }}</td>
+                <td>{{ v[0] }}</td>
+                <td>{{ v[1] }}</td>
+                <td>{{ v[2] }}</td>
+                <td>₡{{ v[3] }}</td>
             </tr>
             {% endfor %}
-
         </table>
 
     </div>

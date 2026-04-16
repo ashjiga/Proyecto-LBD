@@ -11,12 +11,10 @@
 
     <header>
         <h1>Facturas</h1>
-        <a href="/">Volver</a>
+        <a href="/" class="btn">Volver</a>
     </header>
 
     <div class="contenedor">
-
-        <h2>Facturas</h2>
 
         <table>
             <tr>
@@ -32,10 +30,12 @@
             <tr>
                 <form action="/facturas/actualizar" method="POST">
                     <input type="hidden" name="id" value="{{ f[0] }}">
+
                     <td>{{ f[1] }}</td>
                     <td>{{ f[2] }}</td>
                     <td>{{ f[3].strftime('%d/%m/%Y') }}</td>
                     <td>₡{{ f[4] }}</td>
+
                     <td>
                         <select name="estado">
                             <option {% if f[5]=='Pagada' %}selected{% endif %}>Pagada</option>
@@ -43,9 +43,15 @@
                             <option {% if f[5]=='Anulada' %}selected{% endif %}>Anulada</option>
                         </select>
                     </td>
+
                     <td>
-                        <button type="submit">Actualizar</button>
+                        <button type="submit" class="btn">Actualizar</button>
+
+                        <a href="/facturas/ver_detalle" class="btn">
+                            Ver detalle
+                        </a>
                     </td>
+
                 </form>
             </tr>
             {% endfor %}
