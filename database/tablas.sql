@@ -1,4 +1,4 @@
---Tablas--
+-- TABLAS
 CREATE TABLE Categorias (
     id_categoria NUMBER PRIMARY KEY,
     nombre_categoria VARCHAR2(100) NOT NULL

@@ -1,4 +1,4 @@
---Inserts--
+--  INSERTS
 INSERT INTO Categorias VALUES (1,'Camisetas');
 INSERT INTO Categorias VALUES (2,'Pantalones');
 INSERT INTO Categorias VALUES (3,'Vestidos');
@@ -44,7 +44,7 @@ INSERT INTO Clientes VALUES (1,'Ana','Lopez','88881111','ana@email.com');
 INSERT INTO Clientes VALUES (2,'Carlos','Ramirez','88882222','carlos@email.com');
 INSERT INTO Clientes VALUES (3,'Maria','Gomez','88883333','maria@email.com');
 INSERT INTO Clientes VALUES (4,'Jose','Perez','88884444','jose@email.com');
-INSERT INTO Clientes VALUES (5,'Laura','Fernandez','88885555','laura@email.com');
+INSERT INTO Clientes VALUES (5,'Marcela','Fernandez','88885555','marcela@email.com');
 INSERT INTO Clientes VALUES (6,'Pedro','Soto','88886666','pedro@email.com');
 
 INSERT INTO Ventas VALUES (1,1,SYSDATE,13000);
@@ -67,11 +67,11 @@ INSERT INTO Detalle_Ventas VALUES (11,13,4,1,2000);
 INSERT INTO Detalle_Ventas VALUES (12,11,5,1,5000);
 INSERT INTO Detalle_Ventas VALUES (13,14,5,2,1500);
 
-INSERT INTO Facturas VALUES (1,1,'ORDEN0001',SYSDATE,13000,0,13000,'Pagada');
-INSERT INTO Facturas VALUES (2,2,'ORDEN0002',SYSDATE,8000,0,8000,'Pagada');
-INSERT INTO Facturas VALUES (3,3,'ORDEN0003',SYSDATE,8500,0,8500,'Pagada');
-INSERT INTO Facturas VALUES (4,4,'ORDEN0004',SYSDATE,7000,0,7000,'Pagada');
-INSERT INTO Facturas VALUES (5,5,'ORDEN0005',SYSDATE,8000,0,8000,'Pagada');
+INSERT INTO Facturas VALUES (1,1,'FAC-01',SYSDATE,13000,0,13000,'Pagada');
+INSERT INTO Facturas VALUES (2,2,'FAC-02',SYSDATE,8000,0,8000,'Pagada');
+INSERT INTO Facturas VALUES (3,3,'FAC-03',SYSDATE,8500,0,8500,'Pagada');
+INSERT INTO Facturas VALUES (4,4,'FAC-04',SYSDATE,7000,0,7000,'Pagada');
+INSERT INTO Facturas VALUES (5,5,'FAC-05',SYSDATE,8000,0,8000,'Pagada');
 
 INSERT INTO Detalle_Facturas VALUES (1,1,1,'Camiseta Dinosaurio',1,4500,4500);
 INSERT INTO Detalle_Facturas VALUES (2,1,4,'Pantalon Jeans',1,5000,5000);
@@ -81,8 +81,8 @@ INSERT INTO Detalle_Facturas VALUES (5,2,2,'Camiseta Superheroe',1,4500,4500);
 INSERT INTO Detalle_Facturas VALUES (6,2,13,'Gorra Infantil',1,2000,2000);
 INSERT INTO Detalle_Facturas VALUES (7,2,14,'Medias Infantiles',1,1500,1500);
 
-INSERT INTO Historial_Ventas VALUES (1,1,1,'Ana Lopez',SYSDATE,13000,'ORDEN0001',4,'Camiseta Dinosaurio, Pantalon Jeans, Gorra, Medias',SYSDATE);
-INSERT INTO Historial_Ventas VALUES (2,2,2,'Carlos Ramirez',SYSDATE,8000,'ORDEN0002',3,'Camiseta, Gorra, Medias',SYSDATE);
-INSERT INTO Historial_Ventas VALUES (3,3,3,'Maria Fernandez',SYSDATE,8500,'ORDEN0003',2,'Camiseta Animales, Pantalon Deportivo',SYSDATE);
-INSERT INTO Historial_Ventas VALUES (4,4,4,'Jose Mora',SYSDATE,7000,'ORDEN0004',2,'Pantalon Jeans, Gorra',SYSDATE);
-INSERT INTO Historial_Ventas VALUES (5,5,5,'Laura Soto',SYSDATE,8000,'ORDEN0005',2,'Conjunto Deportivo, Medias',SYSDATE);
+INSERT INTO Historial_Ventas VALUES (1,1,1,'Ana Lopez',SYSDATE,13000,'FAC-01',4,'Camiseta Dinosaurio, Pantalon Jeans, Gorra, Medias',SYSDATE);
+INSERT INTO Historial_Ventas VALUES (2,2,2,'Carlos Ramirez',SYSDATE,8000,'FAC-02',3,'Camiseta, Gorra, Medias',SYSDATE);
+INSERT INTO Historial_Ventas VALUES (3,3,3,'Maria Gomez',SYSDATE,8500,'FAC-03',2,'Camiseta Animales, Pantalon Deportivo',SYSDATE);
+INSERT INTO Historial_Ventas VALUES (4,4,4,'Jose Perez',SYSDATE,7000,'FAC-04',2,'Pantalon Jeans, Gorra',SYSDATE);
+INSERT INTO Historial_Ventas VALUES (5,5,5,'Marcela Fernandez',SYSDATE,8000,'FAC-05',2,'Conjunto Deportivo, Medias',SYSDATE);
